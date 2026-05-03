@@ -23,20 +23,20 @@ experiments = [
         "lr": 1e-3,
         "augmentation_type": "noaug",
     },
-    {
-        "run_name": "unet_original_isic_lightaug_lr_best_e20",
-        "batch_size": 2,
-        "epochs": 20,
-        "lr": 1e-4,  # change manually after seeing best LR
-        "augmentation_type": "lightaug",
-    },
-    {
-        "run_name": "unet_original_isic_best_e50",
-        "batch_size": 2,
-        "epochs": 50,
-        "lr": 1e-4,  # change manually after seeing best LR
-        "augmentation_type": "lightaug",  # change to noaug if noaug was better
-    },
+    # {
+    #     "run_name": "unet_original_isic_lightaug_lr_best_e20",
+    #     "batch_size": 2,
+    #     "epochs": 20,
+    #     "lr": 1e-4,  # change manually after seeing best LR
+    #     "augmentation_type": "lightaug",
+    # },
+    # {
+    #     "run_name": "unet_original_isic_best_e50",
+    #     "batch_size": 2,
+    #     "epochs": 50,
+    #     "lr": 1e-4,  # change manually after seeing best LR
+    #     "augmentation_type": "lightaug",  # change to noaug if noaug was better
+    # },
 ]
 
 
