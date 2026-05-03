@@ -17,7 +17,7 @@ class DoubleConv(nn.Module):
         return self.net(x)
 
 
-class UNetOriginal(nn.Module):
+class UNet(nn.Module):
     def __init__(self, in_channels=3, out_channels=1):
         super().__init__()
 
