@@ -3,40 +3,26 @@ import subprocess
 
 experiments = [
     {
-        "run_name": "unet_original_isic_noaug_lr1e4_e20",
+        "run_name": "unet_isic_lightaug_lr1e4_e20",
         "batch_size": 2,
         "epochs": 20,
         "lr": 1e-4,
+        "augmentation_type": "lightaug",
+    },
+    {
+        "run_name": "unet_isic_noaug_lr5e5_e20",
+        "batch_size": 2,
+        "epochs": 20,
+        "lr": 5e-5,
         "augmentation_type": "noaug",
     },
     {
-        "run_name": "unet_original_isic_noaug_lr3e4_e20",
+        "run_name": "unet_isic_lightaug_lr5e5_e20",
         "batch_size": 2,
         "epochs": 20,
-        "lr": 3e-4,
-        "augmentation_type": "noaug",
+        "lr": 5e-5,
+        "augmentation_type": "lightaug",
     },
-    {
-        "run_name": "unet_original_isic_noaug_lr1e3_e20",
-        "batch_size": 2,
-        "epochs": 20,
-        "lr": 1e-3,
-        "augmentation_type": "noaug",
-    },
-    # {
-    #     "run_name": "unet_original_isic_lightaug_lr_best_e20",
-    #     "batch_size": 2,
-    #     "epochs": 20,
-    #     "lr": 1e-4,  # change manually after seeing best LR
-    #     "augmentation_type": "lightaug",
-    # },
-    # {
-    #     "run_name": "unet_original_isic_best_e50",
-    #     "batch_size": 2,
-    #     "epochs": 50,
-    #     "lr": 1e-4,  # change manually after seeing best LR
-    #     "augmentation_type": "lightaug",  # change to noaug if noaug was better
-    # },
 ]
 
 
