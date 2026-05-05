@@ -2,26 +2,47 @@ import subprocess
 
 
 experiments = [
+    # ------------------------------------------------------------
+    # Main continuation of current best setting
+    # ------------------------------------------------------------
     {
-        "run_name": "unet_isic_lightaug_lr1e4_e20",
+        "run_name": "unet_isic_noaug_lr5e5_e40",
         "batch_size": 2,
-        "epochs": 20,
-        "lr": 1e-4,
-        "augmentation_type": "lightaug",
-    },
-    {
-        "run_name": "unet_isic_noaug_lr5e5_e20",
-        "batch_size": 2,
-        "epochs": 20,
+        "epochs": 40,
         "lr": 5e-5,
         "augmentation_type": "noaug",
     },
     {
-        "run_name": "unet_isic_lightaug_lr5e5_e20",
+        "run_name": "unet_isic_lightaug_lr5e5_e40",
         "batch_size": 2,
-        "epochs": 20,
+        "epochs": 40,
         "lr": 5e-5,
         "augmentation_type": "lightaug",
+    },
+
+    # ------------------------------------------------------------
+    # Learning-rate sweep around current best
+    # ------------------------------------------------------------
+    {
+        "run_name": "unet_isic_noaug_lr7e5_e40",
+        "batch_size": 2,
+        "epochs": 40,
+        "lr": 7e-5,
+        "augmentation_type": "noaug",
+    },
+    {
+        "run_name": "unet_isic_noaug_lr3e5_e40",
+        "batch_size": 2,
+        "epochs": 40,
+        "lr": 3e-5,
+        "augmentation_type": "noaug",
+    },
+    {
+        "run_name": "unet_isic_noaug_lr1e5_e40",
+        "batch_size": 2,
+        "epochs": 40,
+        "lr": 1e-5,
+        "augmentation_type": "noaug",
     },
 ]
 

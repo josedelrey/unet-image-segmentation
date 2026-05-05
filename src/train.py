@@ -51,7 +51,7 @@ def parse_args():
         "--augmentation_type",
         type=str,
         default="noaug",
-        choices=["noaug", "lightaug"],
+        choices=["noaug", "geomaug", "mildaug", "strongaug"],
     )
 
     parser.add_argument("--seed", type=int, default=42)
