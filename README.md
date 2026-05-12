@@ -21,7 +21,7 @@ finished package.
 - Optimizes a combined BCE + Dice loss.
 - Tracks validation Dice, saves the best checkpoint, tunes the prediction
   threshold on validation data, then evaluates once on the held-out test split.
-- Logs experiment summaries to `outputs/experiments.csv`.
+- Logs experiment summaries to `results/results.csv`.
 
 ## Current Results
 
@@ -60,7 +60,7 @@ Local-only directories are ignored by git:
 ```text
 isic_segmentation/  Dataset images and masks
 models/             Saved checkpoints
-outputs/            Experiment CSV logs
+results/            Experiment CSV logs
 ```
 
 ## Running

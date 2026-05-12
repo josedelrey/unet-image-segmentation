@@ -21,7 +21,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 INPUT_SIZE = 572
 OUTPUT_SIZE = 388
 
-LOG_PATH = "outputs/experiments.csv"
+LOG_PATH = "results/results.csv"
 
 CSV_HEADER = [
     "run_name",
@@ -167,7 +167,7 @@ def log_experiment(
     final_test_dice,
     final_test_loss,
 ):
-    os.makedirs("outputs", exist_ok=True)
+    os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
 
     file_exists = os.path.exists(LOG_PATH)
 
