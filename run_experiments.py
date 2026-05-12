@@ -2,48 +2,104 @@ import subprocess
 
 
 experiments = [
-    # ------------------------------------------------------------
-    # Main continuation of current best setting
-    # ------------------------------------------------------------
+    # # ============================================================
+    # # Phase 1: extend the current best setting
+    # # Current best:
+    # #   noaug, lr=5e-5, batch_size=2, epochs=20
+    # # Goal:
+    # #   Check whether the model is still improving after 20 epochs.
+    # # ============================================================
+    # {
+    #     "run_name": "unet_isic_noaug_lr5e5_e40",
+    #     "augmentation_type": "noaug",
+    #     "epochs": 40,
+    #     "batch_size": 2,
+    #     "lr": 5e-5,
+    # },
+
+    # # ============================================================
+    # # Phase 2: augmentation comparison at the best LR
+    # # Goal:
+    # #   Is augmentation actually helping, or is ISIC small enough
+    # #   that noaug performs better under this architecture?
+    # # ============================================================
+    # {
+    #     "run_name": "unet_isic_geomaug_lr5e5_e40",
+    #     "augmentation_type": "geomaug",
+    #     "epochs": 40,
+    #     "batch_size": 2,
+    #     "lr": 5e-5,
+    # },
+    # {
+    #     "run_name": "unet_isic_mildaug_lr5e5_e40",
+    #     "augmentation_type": "mildaug",
+    #     "epochs": 40,
+    #     "batch_size": 2,
+    #     "lr": 5e-5,
+    # },
+    # {
+    #     "run_name": "unet_isic_strongaug_lr5e5_e40",
+    #     "augmentation_type": "strongaug",
+    #     "epochs": 40,
+    #     "batch_size": 2,
+    #     "lr": 5e-5,
+    # },
+
+    # # ============================================================
+    # # Phase 3: LR search around the current best
+    # # Goal:
+    # #   1e-4 was decent, 5e-5 was better.
+    # #   Try lower values to see if training becomes more stable.
+    # # ============================================================
+    # {
+    #     "run_name": "unet_isic_noaug_lr3e5_e40",
+    #     "augmentation_type": "noaug",
+    #     "epochs": 40,
+    #     "batch_size": 2,
+    #     "lr": 3e-5,
+    # },
+    # {
+    #     "run_name": "unet_isic_mildaug_lr3e5_e40",
+    #     "augmentation_type": "mildaug",
+    #     "epochs": 40,
+    #     "batch_size": 2,
+    #     "lr": 3e-5,
+    # },
+    # {
+    #     "run_name": "unet_isic_noaug_lr7e5_e40",
+    #     "augmentation_type": "noaug",
+    #     "epochs": 40,
+    #     "batch_size": 2,
+    #     "lr": 7e-5,
+    # },
     {
-        "run_name": "unet_isic_noaug_lr5e5_e40",
-        "batch_size": 2,
+        "run_name": "unet_isic_mildaug_lr7e5_e40",
+        "augmentation_type": "mildaug",
         "epochs": 40,
-        "lr": 5e-5,
-        "augmentation_type": "noaug",
-    },
-    {
-        "run_name": "unet_isic_lightaug_lr5e5_e40",
         "batch_size": 2,
-        "epochs": 40,
-        "lr": 5e-5,
-        "augmentation_type": "lightaug",
+        "lr": 7e-5,
     },
 
-    # ------------------------------------------------------------
-    # Learning-rate sweep around current best
-    # ------------------------------------------------------------
-    {
-        "run_name": "unet_isic_noaug_lr7e5_e40",
-        "batch_size": 2,
-        "epochs": 40,
-        "lr": 7e-5,
-        "augmentation_type": "noaug",
-    },
-    {
-        "run_name": "unet_isic_noaug_lr3e5_e40",
-        "batch_size": 2,
-        "epochs": 40,
-        "lr": 3e-5,
-        "augmentation_type": "noaug",
-    },
-    {
-        "run_name": "unet_isic_noaug_lr1e5_e40",
-        "batch_size": 2,
-        "epochs": 40,
-        "lr": 1e-5,
-        "augmentation_type": "noaug",
-    },
+    # ============================================================
+    # Phase 4: longer best-candidate runs
+    # Goal:
+    #   Run only the most likely good configs longer.
+    #   These are good candidates based on your current results.
+    # ============================================================
+    # {
+    #     "run_name": "unet_isic_noaug_lr5e5_e60",
+    #     "augmentation_type": "noaug",
+    #     "epochs": 60,
+    #     "batch_size": 2,
+    #     "lr": 5e-5,
+    # },
+    # {
+    #     "run_name": "unet_isic_mildaug_lr5e5_e60",
+    #     "augmentation_type": "mildaug",
+    #     "epochs": 60,
+    #     "batch_size": 2,
+    #     "lr": 5e-5,
+    # },
 ]
 
 

@@ -2,3 +2,6 @@ isic_segmentation/
 models/
 outputs/
 __pycache__/
+notes.txt
+*.pyc
+AGENTS.md
