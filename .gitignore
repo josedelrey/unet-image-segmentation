@@ -1,6 +1,12 @@
 isic_segmentation/
 models/
+
+# Keep the curated experiment summary, ignore generated result artifacts.
+results/*
+!results/
+!results/results.csv
+
 __pycache__/
+*.py[cod]
 notes.txt
-*.pyc
 AGENTS.md
