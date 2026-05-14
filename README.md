@@ -52,6 +52,8 @@ src/
   train.py          Training, validation, threshold tuning, and test evaluation
   unet.py           U-Net model definition
   utils.py          Split helpers and Dice metric
+  visualize_predictions.py
+                    Checkpoint inference and side-by-side prediction panels
 run_experiments.py  Batch runner for experiment sweeps
 ```
 
@@ -89,6 +91,18 @@ Run the current experiment sweep:
 python run_experiments.py
 ```
 
+Generate prediction preview panels from a checkpoint:
+
+```powershell
+python src/visualize_predictions.py --checkpoint models/unet_isic_geomaug_lr5e5_e40.pth --num_samples 6 --threshold 0.5
+```
+
+Panels are written to `results/predictions/` and show:
+
+```text
+image | ground truth | prediction
+```
+
 The dataset is expected at:
 
 ```text
@@ -104,8 +118,6 @@ Mask files are expected to follow the pattern:
 
 ## What I Am Working On Next
 
-- Add a small inference/visualization script for qualitative mask previews.
-- Add requirements/environment documentation so the repo is easier to reproduce.
 - Move experiment configuration out of the Python script into a cleaner config
   format.
 - Add plots for training curves and validation/test comparisons.
