@@ -85,6 +85,12 @@ Train one experiment:
 python src/train.py --run_name unet_isic_geomaug_lr5e5_e40 --batch_size 2 --epochs 40 --lr 5e-5 --augmentation_type geomaug
 ```
 
+The dataset, checkpoint, and results paths can be overridden:
+
+```powershell
+python src/train.py --run_name my_run --image_dir isic_segmentation/images_segmentation --mask_dir isic_segmentation/ground_truth --model_dir models --results_path results/results.csv
+```
+
 Run the current experiment sweep:
 
 ```powershell

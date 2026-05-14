@@ -6,10 +6,10 @@ import numpy as np
 
 def get_image_names(image_dir):
     valid_exts = [".jpg", ".jpeg", ".png"]
-    return [
+    return sorted(
         f for f in os.listdir(image_dir)
         if os.path.splitext(f.lower())[1] in valid_exts
-    ]
+    )
 
 
 def train_test_split(names, train_ratio=0.8, seed=42):

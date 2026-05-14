@@ -2,6 +2,7 @@ import os
 import csv
 import argparse
 import random
+from pathlib import Path
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
@@ -13,15 +14,15 @@ from losses import BCEDiceLoss
 from utils import get_image_names, train_test_split, dice_score_from_logits
 
 
-IMAGE_DIR = "isic_segmentation/images_segmentation"
-MASK_DIR = "isic_segmentation/ground_truth"
+DEFAULT_IMAGE_DIR = "isic_segmentation/images_segmentation"
+DEFAULT_MASK_DIR = "isic_segmentation/ground_truth"
+DEFAULT_MODEL_DIR = "models"
+DEFAULT_RESULTS_PATH = "results/results.csv"
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 INPUT_SIZE = 572
 OUTPUT_SIZE = 388
-
-LOG_PATH = "results/results.csv"
 
 CSV_HEADER = [
     "run_name",
@@ -46,6 +47,10 @@ def parse_args():
     parser.add_argument("--batch_size", type=int, default=2)
     parser.add_argument("--epochs", type=int, default=20)
     parser.add_argument("--lr", type=float, default=1e-4)
+    parser.add_argument("--image_dir", type=str, default=DEFAULT_IMAGE_DIR)
+    parser.add_argument("--mask_dir", type=str, default=DEFAULT_MASK_DIR)
+    parser.add_argument("--model_dir", type=str, default=DEFAULT_MODEL_DIR)
+    parser.add_argument("--results_path", type=str, default=DEFAULT_RESULTS_PATH)
 
     parser.add_argument(
         "--augmentation_type",
@@ -155,6 +160,7 @@ def find_best_threshold(model, loader, thresholds):
 
 
 def log_experiment(
+    results_path,
     run_name,
     augmentation_type,
     epochs,
@@ -167,24 +173,25 @@ def log_experiment(
     final_test_dice,
     final_test_loss,
 ):
-    os.makedirs(os.path.dirname(LOG_PATH), exist_ok=True)
+    results_path = Path(results_path)
+    results_path.parent.mkdir(parents=True, exist_ok=True)
 
-    file_exists = os.path.exists(LOG_PATH)
+    file_exists = results_path.exists()
 
     if file_exists:
-        with open(LOG_PATH, "r", newline="") as f:
+        with results_path.open("r", newline="") as f:
             reader = csv.reader(f)
             existing_header = next(reader, None)
 
         if existing_header != CSV_HEADER:
             raise ValueError(
-                f"CSV header mismatch in {LOG_PATH}.\n"
+                f"CSV header mismatch in {results_path}.\n"
                 f"Expected: {CSV_HEADER}\n"
                 f"Found:    {existing_header}\n"
                 "Delete the file or update the header."
             )
 
-    with open(LOG_PATH, "a", newline="") as f:
+    with results_path.open("a", newline="") as f:
         writer = csv.writer(f)
 
         if not file_exists:
@@ -210,8 +217,9 @@ def main():
     args = parse_args()
     set_seed(args.seed)
 
-    model_path = f"models/{args.run_name}.pth"
-    os.makedirs("models", exist_ok=True)
+    model_dir = Path(args.model_dir)
+    model_dir.mkdir(parents=True, exist_ok=True)
+    model_path = model_dir / f"{args.run_name}.pth"
 
     print("Device:", DEVICE)
     print("Run name:", args.run_name)
@@ -219,8 +227,12 @@ def main():
     print("Epochs:", args.epochs)
     print("Batch size:", args.batch_size)
     print("Augmentation:", args.augmentation_type)
+    print("Image dir:", args.image_dir)
+    print("Mask dir:", args.mask_dir)
+    print("Model path:", model_path)
+    print("Results path:", args.results_path)
 
-    image_names = get_image_names(IMAGE_DIR)
+    image_names = get_image_names(args.image_dir)
 
     trainval_names, test_names = train_test_split(image_names, train_ratio=0.8, seed=args.seed)
     train_names, val_names = train_test_split(trainval_names, train_ratio=0.9, seed=args.seed)
@@ -231,8 +243,8 @@ def main():
     print(f"Test images:  {len(test_names)}")
 
     train_dataset = ISICDataset(
-        IMAGE_DIR,
-        MASK_DIR,
+        args.image_dir,
+        args.mask_dir,
         train_names,
         input_size=INPUT_SIZE,
         output_size=OUTPUT_SIZE,
@@ -240,8 +252,8 @@ def main():
     )
 
     val_dataset = ISICDataset(
-        IMAGE_DIR,
-        MASK_DIR,
+        args.image_dir,
+        args.mask_dir,
         val_names,
         input_size=INPUT_SIZE,
         output_size=OUTPUT_SIZE,
@@ -249,8 +261,8 @@ def main():
     )
 
     test_dataset = ISICDataset(
-        IMAGE_DIR,
-        MASK_DIR,
+        args.image_dir,
+        args.mask_dir,
         test_names,
         input_size=INPUT_SIZE,
         output_size=OUTPUT_SIZE,
@@ -348,6 +360,7 @@ def main():
     )
 
     log_experiment(
+        results_path=args.results_path,
         run_name=args.run_name,
         augmentation_type=args.augmentation_type,
         epochs=args.epochs,
