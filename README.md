@@ -94,7 +94,17 @@ python src/train.py --run_name my_run --image_dir isic_segmentation/images_segme
 Run the current experiment sweep:
 
 ```powershell
-python run_experiments.py
+python run_experiments.py --config configs/final_run.yaml
+```
+
+Experiment batches are defined in YAML. `configs/final_run.yaml` contains the
+final 60-epoch candidate run. `configs/experiments_ran.yaml` is an archival
+record of the experiments already logged in `results/results.csv`.
+
+Preview a batch without starting training:
+
+```powershell
+python run_experiments.py --config configs/final_run.yaml --dry_run
 ```
 
 Generate prediction preview panels from a checkpoint:

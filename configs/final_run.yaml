@@ -1,0 +1,13 @@
+defaults:
+  batch_size: 2
+  seed: 42
+  image_dir: isic_segmentation/images_segmentation
+  mask_dir: isic_segmentation/ground_truth
+  model_dir: models
+  results_path: results/results.csv
+
+experiments:
+  - run_name: unet_isic_geomaug_lr5e5_e60_final
+    augmentation_type: geomaug
+    epochs: 60
+    lr: 0.00005
