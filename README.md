@@ -88,7 +88,7 @@ python src/train.py --run_name unet_isic_geomaug_lr5e5_e40 --batch_size 2 --epoc
 The dataset, checkpoint, and results paths can be overridden:
 
 ```powershell
-python src/train.py --run_name my_run --image_dir isic_segmentation/images_segmentation --mask_dir isic_segmentation/ground_truth --model_dir models --results_path results/results.csv
+python src/train.py --run_name my_run --image_dir isic_segmentation/images_segmentation --mask_dir isic_segmentation/ground_truth --model_dir models --results_path results/results.csv --num_workers 0
 ```
 
 Run the current experiment sweep:

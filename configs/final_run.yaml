@@ -5,9 +5,10 @@ defaults:
   mask_dir: isic_segmentation/ground_truth
   model_dir: models
   results_path: results/results.csv
+  num_workers: 0
 
 experiments:
-  - run_name: unet_isic_geomaug_lr5e5_e60_final
+  - run_name: unet_isic_geomaug_lr5e5_e75_final
     augmentation_type: geomaug
-    epochs: 60
+    epochs: 75
     lr: 0.00005

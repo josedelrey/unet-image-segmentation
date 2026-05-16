@@ -27,6 +27,7 @@ TRAIN_ARG_FIELDS = [
     "mask_dir",
     "model_dir",
     "results_path",
+    "num_workers",
 ]
 
 

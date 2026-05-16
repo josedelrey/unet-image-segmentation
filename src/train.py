@@ -51,6 +51,7 @@ def parse_args():
     parser.add_argument("--mask_dir", type=str, default=DEFAULT_MASK_DIR)
     parser.add_argument("--model_dir", type=str, default=DEFAULT_MODEL_DIR)
     parser.add_argument("--results_path", type=str, default=DEFAULT_RESULTS_PATH)
+    parser.add_argument("--num_workers", type=int, default=0)
 
     parser.add_argument(
         "--augmentation_type",
@@ -231,6 +232,7 @@ def main():
     print("Mask dir:", args.mask_dir)
     print("Model path:", model_path)
     print("Results path:", args.results_path)
+    print("DataLoader workers:", args.num_workers)
 
     image_names = get_image_names(args.image_dir)
 
@@ -269,9 +271,29 @@ def main():
         augmentation_type="noaug",
     )
 
-    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
-    val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=2, pin_memory=True)
-    test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=2, pin_memory=True)
+    pin_memory = DEVICE == "cuda"
+
+    train_loader = DataLoader(
+        train_dataset,
+        batch_size=args.batch_size,
+        shuffle=True,
+        num_workers=args.num_workers,
+        pin_memory=pin_memory,
+    )
+    val_loader = DataLoader(
+        val_dataset,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=args.num_workers,
+        pin_memory=pin_memory,
+    )
+    test_loader = DataLoader(
+        test_dataset,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=args.num_workers,
+        pin_memory=pin_memory,
+    )
 
     model = UNet(in_channels=3, out_channels=1).to(DEVICE)
 
